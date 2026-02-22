@@ -8,7 +8,7 @@ import { addToCart } from '@/store/slices/cartSlice';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import ProductCard from '@/components/product/ProductCard';
 
 export default function ProductDetailPage() {
@@ -20,6 +20,16 @@ export default function ProductDetailPage() {
     });
 
     const { data: relatedProducts } = useGetProductsQuery();
+
+    const relatedRef = useRef<HTMLDivElement>(null);
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (relatedRef.current) {
+            const { scrollLeft, clientWidth } = relatedRef.current;
+            const scrollTo = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
+            relatedRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+        }
+    };
 
     const [selectedColor, setSelectedColor] = useState(0);
     const [selectedSize, setSelectedSize] = useState('42');
@@ -146,17 +156,28 @@ export default function ProductDetailPage() {
                 <div className="flex justify-between items-center mb-8">
                     <h2 className="text-3xl md:text-5xl font-extrabold uppercase text-[#232321]">You may also like</h2>
                     <div className="flex gap-2">
-                        <button className="w-10 h-10 rounded-lg bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition-colors">
+                        <button
+                            onClick={() => scroll('left')}
+                            className="w-10 h-10 rounded-lg bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition-colors"
+                        >
                             <ChevronLeft className="w-5 h-5" />
                         </button>
-                        <button className="w-10 h-10 rounded-lg bg-[#232321] text-white flex items-center justify-center hover:bg-black transition-colors">
+                        <button
+                            onClick={() => scroll('right')}
+                            className="w-10 h-10 rounded-lg bg-[#232321] text-white flex items-center justify-center hover:bg-black transition-colors"
+                        >
                             <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    {relatedProducts?.slice(0, 4).map((rp) => (
-                        <ProductCard key={rp.id} product={rp} />
+                <div
+                    ref={relatedRef}
+                    className="flex overflow-x-auto gap-6 no-scrollbar scroll-smooth pb-4"
+                >
+                    {relatedProducts?.slice(0, 8).map((rp) => (
+                        <div key={rp.id} className="min-w-[280px] md:min-w-[calc(25%-18px)]">
+                            <ProductCard product={rp} />
+                        </div>
                     ))}
                 </div>
             </div>

@@ -17,14 +17,14 @@ export default function Navbar() {
                     <Link href="/products" className="hover:text-blue-600 transition-colors">
                         New Drops 🔥
                     </Link>
-                    <button className="flex items-center gap-1 hover:text-blue-600 transition-colors">
+                    <Link href="/products" className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                         Men
                         <span className="text-[10px]">▼</span>
-                    </button>
-                    <button className="flex items-center gap-1 hover:text-blue-600 transition-colors">
+                    </Link>
+                    <Link href="/products" className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                         Women
                         <span className="text-[10px]">▼</span>
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Center Logo */}

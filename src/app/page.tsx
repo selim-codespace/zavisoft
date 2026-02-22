@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useGetProductsQuery, useGetCategoriesQuery } from '@/store/api/platziApi';
 import ProductCard from '@/components/product/ProductCard';
@@ -10,6 +12,17 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 export default function Home() {
   const { data: products, isLoading: isProductsLoading, error: productsError, refetch: refetchProducts } = useGetProductsQuery();
   const { data: categories, isLoading: isCategoriesLoading, error: categoriesError, refetch: refetchCategories } = useGetCategoriesQuery();
+
+  const categoriesRef = useRef<HTMLDivElement>(null);
+  const reviewsRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+    if (ref.current) {
+      const { scrollLeft, clientWidth } = ref.current;
+      const scrollTo = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
+      ref.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-24 pb-20 overflow-hidden">
@@ -44,9 +57,9 @@ export default function Home() {
                 <p className="text-md font-medium max-w-[280px] md:max-w-sm mb-6 md:mb-10 opacity-90">
                   Nike introducing the new air max for everyone&apos;s comfort
                 </p>
-                <button className="bg-[#4A69E2] text-white px-6 md:px-10 py-3 md:py-4 rounded-xl font-bold w-fit hover:bg-blue-600 transition-all uppercase text-sm md:text-base active:scale-95">
+                <Link href="/products" className="bg-[#4A69E2] text-white px-6 md:px-10 py-3 md:py-4 rounded-xl font-bold w-fit hover:bg-blue-600 transition-all uppercase text-sm md:text-base active:scale-95">
                   SHOP NOW
-                </button>
+                </Link>
               </div>
 
               <div className="flex flex-col justify-end gap-3 md:gap-4 items-end md:col-span-4 relative">
@@ -68,9 +81,9 @@ export default function Home() {
           <h2 className="text-2xl md:text-7xl font-bold leading-none tracking-tighter capitalize text-[#232321]">
             Don't miss out<br /> new drops
           </h2>
-          <button className="bg-[#4A69E2] text-white px-6 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors uppercase">
+          <Link href="/products" className="bg-[#4A69E2] text-white px-6 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors uppercase">
             Shop new drops
-          </button>
+          </Link>
         </div>
 
         {isProductsLoading ? (
@@ -91,10 +104,16 @@ export default function Home() {
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-2xl md:text-6xl font-extrabold tracking-tighter text-white uppercase">CATEGORIES</h2>
           <div className="flex gap-2">
-            <button className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+            <button
+              onClick={() => scroll(categoriesRef, 'left')}
+              className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+            >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <button className="w-10 h-10 rounded-lg bg-white text-[#232321] flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <button
+              onClick={() => scroll(categoriesRef, 'right')}
+              className="w-10 h-10 rounded-lg bg-white text-[#232321] flex items-center justify-center hover:bg-gray-200 transition-colors"
+            >
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
@@ -105,9 +124,12 @@ export default function Home() {
         ) : categoriesError ? (
           <ErrorMessage onRetry={refetchCategories} />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-            {categories?.slice(0, 2).map((category) => (
-              <div key={category.id} className="bg-[#F4F4F4] rounded-[32px] overflow-hidden group aspect-[4/3] md:aspect-auto md:h-[500px] relative flex flex-col justify-end p-8">
+          <div
+            ref={categoriesRef}
+            className="flex md:grid md:grid-cols-2 gap-6 relative z-10 overflow-x-auto no-scrollbar scroll-smooth"
+          >
+            {categories?.slice(0, 4).map((category) => (
+              <div key={category.id} className="min-w-[80vw] md:min-w-0 bg-[#F4F4F4] rounded-[32px] overflow-hidden group aspect-[4/3] md:aspect-auto md:h-[500px] relative flex flex-col justify-end p-8">
                 <div className="absolute inset-0 z-0 p-8 flex items-center justify-center">
                   <Image
                     src={category.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80'}
@@ -135,36 +157,51 @@ export default function Home() {
       <section className="px-4 md:px-12 lg:px-24 mt-36">
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-2xl md:text-6xl font-extrabold tracking-tighter text-[#232321] uppercase">REVIEWS</h2>
-          <button className="bg-[#4A69E2] text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors uppercase text-sm">
+          <Link href="/products" className="bg-[#4A69E2] text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors uppercase text-sm">
             SEE ALL
-          </button>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="bg-white rounded-[32px] overflow-hidden flex flex-col">
-              <div className="p-6 md:p-8 flex-grow flex flex-col gap-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-xl text-[#232321] mb-2">Good Quality</h3>
-                    <p className="text-gray-500 text-sm mb-4">I highly recommend shopping from kicks</p>
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map(star => (
-                        <span key={star} className="text-[#FFA52F]">★</span>
-                      ))}
-                      <span className="font-bold ml-2 text-sm text-[#232321]">5.0</span>
+        <div className="relative group">
+          <div
+            ref={reviewsRef}
+            className="flex overflow-x-auto gap-6 no-scrollbar scroll-smooth pb-4"
+          >
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div key={item} className="min-w-[85vw] md:min-w-[calc(33.333%-16px)] bg-white rounded-[32px] overflow-hidden flex flex-col shadow-sm">
+                <div className="p-6 md:p-8 flex-grow flex flex-col gap-4">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-bold text-xl text-[#232321] mb-2">Good Quality</h3>
+                      <p className="text-gray-500 text-sm mb-4">I highly recommend shopping from kicks</p>
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <span key={star} className="text-[#FFA52F]">★</span>
+                        ))}
+                        <span className="font-bold ml-2 text-sm text-[#232321]">5.0</span>
+                      </div>
+                    </div>
+                    <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                      <Image src={`https://i.pravatar.cc/100?img=${item + 10}`} alt="User" width={48} height={48} className="object-cover" />
                     </div>
                   </div>
-                  <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                    <Image src={`https://i.pravatar.cc/100?img=${item + 10}`} alt="User" width={48} height={48} className="object-cover" />
-                  </div>
+                </div>
+                <div className="relative h-64 w-full">
+                  <Image src={`https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400&h=300`} alt="Review shoe" fill className="object-cover" />
                 </div>
               </div>
-              <div className="relative h-64 w-full">
-                <Image src={`https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400&h=300`} alt="Review shoe" fill className="object-cover" />
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 items-center">
+            <button onClick={() => scroll(reviewsRef, 'left')} className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="hidden md:flex absolute -right-12 top-1/2 -translate-y-1/2 items-center">
+            <button onClick={() => scroll(reviewsRef, 'right')} className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
         </div>
       </section>
 

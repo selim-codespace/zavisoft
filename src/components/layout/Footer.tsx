@@ -40,21 +40,21 @@ export default function Footer() {
                     <div>
                         <h3 className="text-[#FFA52F] font-bold text-lg mb-4">Categories</h3>
                         <ul className="space-y-3 text-gray-300 text-sm">
-                            <li><Link href="#" className="hover:text-white transition-colors">Runners</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Sneakers</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Basketball</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Outdoor</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Golf</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Hiking</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Runners</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Sneakers</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Basketball</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Outdoor</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Golf</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Hiking</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-[#FFA52F] font-bold text-lg mb-4">Company</h3>
                         <ul className="space-y-3 text-gray-300 text-sm">
-                            <li><Link href="#" className="hover:text-white transition-colors">About</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Contact</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Blogs</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">About</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Contact</Link></li>
+                            <li><Link href="/products" className="hover:text-white transition-colors">Blogs</Link></li>
                         </ul>
                     </div>
 

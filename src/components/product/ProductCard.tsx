@@ -13,7 +13,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     return (
         <div className="flex flex-col group">
-            <div className="bg-[#F4F4F4] rounded-[32px] p-0 relative overflow-hidden mb-4 aspect-square flex items-center justify-center">
+            <Link href={`/products/${product.id}`} className="bg-[#F4F4F4] rounded-[32px] p-0 relative overflow-hidden mb-4 aspect-square flex items-center justify-center">
                 {/* NEW Badge */}
                 <div className="absolute top-0 left-0 bg-[#4A69E2] text-white px-4 py-2 text-sm font-bold rounded-tl-[32px] rounded-br-[24px] z-10">
                     New
@@ -27,11 +27,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                     className="object-cover mix-blend-multiply transition-transform duration-500 group-hover:scale-110"
                     unoptimized // Using unoptimized for fake store URLs as they might fail Next.js optimization
                 />
-            </div>
+            </Link>
 
-            <h3 className="text-[#232321] font-bold text-lg leading-tight uppercase mb-4 line-clamp-2 min-h-[50px]">
-                {product.title}
-            </h3>
+            <Link href={`/products/${product.id}`}>
+                <h3 className="text-[#232321] font-bold text-lg leading-tight uppercase mb-4 line-clamp-2 min-h-[50px] hover:text-blue-600 transition-colors">
+                    {product.title}
+                </h3>
+            </Link>
 
             <Link
                 href={`/products/${product.id}`}
