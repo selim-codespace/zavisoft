@@ -3,7 +3,7 @@
 A responsive, high-fidelity frontend web application built as an assignment for Zavisoft. The application is built using Next.js (App Router), Redux Toolkit, RTK Query, and Tailwind CSS. It consumes the Platzi Fake Store API.
 
 ## 🚀 Live Demo
-*(Replace with live deployment URL)*
+https://zavisoft-frontend-task.netlify.app/
 
 ## 🛠️ Technology Stack
 - **Framework:** Next.js 15 (App Router)
