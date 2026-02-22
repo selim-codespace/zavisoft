@@ -11,7 +11,7 @@ export default function Navbar() {
 
     return (
         <div className="pt-8 px-4 md:px-12 lg:px-24 w-full">
-            <nav className="bg-white rounded-3xl px-6 py-4 flex items-center justify-between shadow-sm">
+            <nav className="bg-white rounded-3xl px-6 py-4 flex items-center justify-between shadow-sm text-black">
                 {/* Left Nav */}
                 <div className="hidden md:flex items-center gap-6 text-sm font-semibold">
                     <Link href="/products" className="hover:text-blue-600 transition-colors">

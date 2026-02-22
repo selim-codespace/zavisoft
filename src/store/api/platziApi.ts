@@ -21,7 +21,7 @@ export interface Product {
 
 export const platziApi = createApi({
     reducerPath: 'platziApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://fakeapi.platzi.com/en/rest/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://api.escuelajs.co/api/v1/' }),
     endpoints: (builder) => ({
         getProducts: builder.query<Product[], void>({
             query: () => 'products',

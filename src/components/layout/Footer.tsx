@@ -70,8 +70,8 @@ export default function Footer() {
                 </div>
 
                 {/* Big Background Text */}
-                <div className="absolute inset-x-0 bottom-[-5%] overflow-hidden flex justify-center opacity-[0.9] pointer-events-none select-none z-0">
-                    <div className="text-[15rem] leading-[0.7] font-black text-white tracking-tighter">KICKS</div>
+                <div className="absolute inset-x-0 bottom-5 md:bottom-[-5%] overflow-hidden flex justify-center opacity-[0.9] pointer-events-none select-none z-0">
+                    <div className="text-[5rem] md:text-[15rem] leading-[0.7] font-black text-white tracking-tighter">KICKS</div>
                 </div>
             </div>
 
